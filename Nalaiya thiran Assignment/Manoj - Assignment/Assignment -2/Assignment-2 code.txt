@@ -1,0 +1,14 @@
+import random
+import time
+temp  = 0
+while True :
+    temp = round(random.random() * 60,2)
+    humidity = round(random.random() * 50,2)
+    print("Temperature: ",temp,' °C')
+    print("Humidity: ",humidity,'%\n')
+    if temp<= 40 :
+        print("Normal temperature")
+        time.sleep(2)
+    else:
+        print(f"High Temperature  of {temp}°C is detected !!!")
+        time.sleep(2)
