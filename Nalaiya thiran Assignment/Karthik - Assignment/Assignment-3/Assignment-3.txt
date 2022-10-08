@@ -1,0 +1,75 @@
+LED Blink Code:
+
+#!/usr/bin/env python
+import RPi.GPIO as GPIO # RPi.GPIO can be referred as GPIO from now
+import time
+ 
+ledPin = 22    # pin22
+ 
+def setup():
+    GPIO.setmode(GPIO.BOARD)       # GPIO Numbering of Pins
+    GPIO.setup(ledPin, GPIO.OUT)   # Set ledPin as output
+    GPIO.output(ledPin, GPIO.LOW)  # Set ledPin to LOW to turn Off the LED
+ 
+def loop():
+    while True:
+        print('LED on')
+        GPIO.output(ledPin, GPIO.HIGH)   # LED On
+        time.sleep(1.0)                  # wait 1 sec
+        print('LED off')
+        GPIO.output(ledPin, GPIO.LOW)   # LED Off
+        time.sleep(1.0)                 # wait 1 sec
+
+def endprogram():
+    GPIO.output(ledPin, GPIO.LOW)     # LED Off
+    GPIO.cleanup()                    # Release resources
+ 
+if _name_ == '_main_':         # Program starts from here
+    setup()
+    try:
+        loop()
+    except KeyboardInterrupt:  # When 'Ctrl+C' is pressed, the destroy() will be  executed.
+        endprogram()
+
+
+Traffic Light Implementation Code:
+
+#!/usr/bin/env python
+import RPi.GPIO as GPIO 
+import time
+red,yellow,green = 19,21,23 # Digital Pins
+def setup(): # Setting all pins to Output Mode and initializing their state as OFF.
+    GPIO.setmode(GPIO.BOARD)      
+    GPIO.setup(red, GPIO.OUT)   
+    GPIO.setup(yellow, GPIO.OUT)
+    GPIO.setup(green, GPIO.OUT)
+    GPIO.output(red, GPIO.LOW)  
+    GPIO.output(yellow, GPIO.LOW)
+    GPIO.output(green, GPIO.LOW)
+
+def lighton(light,msg,delay): # Function to turn on individual LEDs
+    GPIO.output(light,GPIO.HIGH)
+    print(msg)
+    time.sleep(delay)
+
+def loop(): # Traffic light implementation
+    while True:
+        lighton(red,"Red Signal !! STOP !!",60)
+        lighton(green,"Green Signal !! GO !!",60)
+        lighton(yellow,"Yellow Signal !! WAIT !!",5)
+                
+def endprogram():
+    GPIO.output(red, GPIO.LOW)  # Finally turning off all LEDs
+    GPIO.output(yellow, GPIO.LOW)
+    GPIO.output(green, GPIO.LOW)    
+    GPIO.cleanup()                    
+ 
+if _name_ == '_main_':        
+    setup()
+    try:
+        loop()
+    except KeyboardInterrupt:  # When 'Ctrl+C' is pressed, the destroy() will be  executed.
+        endprogram()
+
+
+
